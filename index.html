@@ -68,9 +68,9 @@
                 <div class="datos-personales">
                     <h3>Datos Personales</h3>
                     <div class="form-group">
-                        <label for="nombre">Nombre completo (Hijo) <span class="required">*</span></label>
+                        <label for="nombre">Nombre completo del hijo/a <span class="required">*</span></label>
                         <input type="text" id="nombre" name="nombre" required>
-                        <div class="error-message" id="error-nombre">Por favor, ingrese su nombre</div>
+                        <div class="error-message" id="error-nombre">Por favor, ingrese el nombre</div>
                     </div>
                     <div class="form-group">
                         <label for="email">Correo electrónico <span class="required">*</span></label>
@@ -158,13 +158,14 @@
             let valido = true;
             ['nombre', 'email', 'parentesco'].forEach(campo => {
                 const input = document.getElementById(campo);
+                if (!input) return;
                 const error = document.getElementById(`error-${campo}`);
                 if (!input.value.trim()) {
-                    error.style.display = 'block';
+                    if (error) error.style.display = 'block';
                     input.style.borderColor = '#dc3545';
                     valido = false;
                 } else {
-                    error.style.display = 'none';
+                    if (error) error.style.display = 'none';
                     input.style.borderColor = '#e9ecef';
                 }
             });
@@ -190,6 +191,7 @@
                 timestamp: new Date().toISOString(),
                 nombre: document.getElementById('nombre').value,
                 email: document.getElementById('email').value,
+                edad: 'N/A',
                 parentesco: document.getElementById('parentesco').value,
                 respuestas: {}
             };
