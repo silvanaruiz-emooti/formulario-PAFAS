@@ -156,7 +156,7 @@
 
         function validarFormulario() {
             let valido = true;
-            ['nombre', 'email', 'edad', 'parentesco'].forEach(campo => {
+            ['nombre', 'email', 'parentesco'].forEach(campo => {
                 const input = document.getElementById(campo);
                 const error = document.getElementById(`error-${campo}`);
                 if (!input.value.trim()) {
@@ -190,7 +190,6 @@
                 timestamp: new Date().toISOString(),
                 nombre: document.getElementById('nombre').value,
                 email: document.getElementById('email').value,
-                edad: document.getElementById('edad').value,
                 parentesco: document.getElementById('parentesco').value,
                 respuestas: {}
             };
