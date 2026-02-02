@@ -1,243 +1,243 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Escala PAFAS - Formulario para Padres</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
-.container { max-width: 900px; margin: 0 auto 40px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
-.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
-.header h1 { font-size: 28px; margin-bottom: 10px; }
-.header p { font-size: 16px; opacity: 0.9; }
-.form-content { padding: 40px; }
-.info-section { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #667eea; }
-.info-section h3 { color: #333; margin-bottom: 10px; font-size: 18px; }
-.info-section p { color: #666; line-height: 1.6; margin-bottom: 8px; }
-.datos-personales { background: #fff; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid #e9ecef; }
-.datos-personales h3 { color: #333; margin-bottom: 20px; font-size: 20px; }
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; }
-.form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; }
-.form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; }
-.question-block { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 10px; border: 2px solid #e9ecef; transition: all 0.3s; }
-.question-block:hover { border-color: #667eea; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1); }
-.question-number { background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; font-size: 14px; }
-.question-text { font-size: 17px; color: #333; margin-bottom: 20px; line-height: 1.6; }
-.options-container { display: flex; flex-direction: column; gap: 12px; }
-.option-label { display: flex; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
-.option-label:hover { background: #e9ecef; border-color: #667eea; }
-.option-label input[type="radio"] { width: 20px; height: 20px; margin-right: 12px; cursor: pointer; accent-color: #667eea; }
-.option-label span { font-size: 15px; color: #555; flex: 1; }
-.option-label input[type="radio"]:checked + span { color: #667eea; font-weight: 600; }
-.submit-section { margin-top: 40px; text-align: center; padding: 30px; background: #f8f9fa; border-radius: 10px; }
-.submit-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 50px; font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); }
-.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
-.submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-.error-message { color: #dc3545; font-size: 14px; margin-top: 5px; display: none; }
-.success-message { background: #d4edda; color: #155724; padding: 20px; border-radius: 10px; margin-top: 20px; border: 2px solid #c3e6cb; display: none; }
-.loading { display: none; text-align: center; padding: 20px; }
-.loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-.required { color: #dc3545; }
-@media (max-width: 768px) {
-body { padding: 10px; }
-.form-content { padding: 20px; }
-.header h1 { font-size: 22px; }
-.question-block { padding: 20px; }
-.submit-btn { width: 100%; padding: 15px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escala PAFAS - Formulario para Padres</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto 40px; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header p { font-size: 16px; opacity: 0.9; }
+        .form-content { padding: 40px; }
+        .info-section { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .info-section h3 { color: #333; margin-bottom: 10px; font-size: 18px; }
+        .info-section p { color: #666; line-height: 1.6; margin-bottom: 8px; }
+        .datos-personales { background: #fff; padding: 25px; border-radius: 10px; margin-bottom: 30px; border: 2px solid #e9ecef; }
+        .datos-personales h3 { color: #333; margin-bottom: 20px; font-size: 20px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 16px; transition: border-color 0.3s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; }
+        .question-block { background: #fff; padding: 25px; margin-bottom: 20px; border-radius: 10px; border: 2px solid #e9ecef; transition: all 0.3s; }
+        .question-block:hover { border-color: #667eea; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1); }
+        .question-number { background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; font-size: 14px; }
+        .question-text { font-size: 17px; color: #333; margin-bottom: 20px; line-height: 1.6; }
+        .options-container { display: flex; flex-direction: column; gap: 12px; }
+        .option-label { display: flex; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 8px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+        .option-label:hover { background: #e9ecef; border-color: #667eea; }
+        .option-label input[type="radio"] { width: 20px; height: 20px; margin-right: 12px; cursor: pointer; accent-color: #667eea; }
+        .option-label span { font-size: 15px; color: #555; flex: 1; }
+        .option-label input[type="radio"]:checked + span { color: #667eea; font-weight: 600; }
+        .submit-section { margin-top: 40px; text-align: center; padding: 30px; background: #f8f9fa; border-radius: 10px; }
+        .submit-btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 18px 50px; font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .error-message { color: #dc3545; font-size: 14px; margin-top: 5px; display: none; }
+        .success-message { background: #d4edda; color: #155724; padding: 20px; border-radius: 10px; margin-top: 20px; border: 2px solid #c3e6cb; display: none; }
+        .loading { display: none; text-align: center; padding: 20px; }
+        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .required { color: #dc3545; }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .form-content { padding: 20px; }
+            .header h1 { font-size: 22px; }
+            .question-block { padding: 20px; }
+            .submit-btn { width: 100%; padding: 15px; }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>Escala de Adaptación de Crianza y Adaptación Familiar (PAFAS)</h1>
-<p>Formulario para padres y madres</p>
-</div>
-<div class="form-content">
-<div class="info-section">
-<h3>Instrucciones</h3>
-<p><strong>0.</strong> No es cierto en lo absoluto con respecto a mí</p>
-<p><strong>1.</strong> Un poco o algunas veces cierto con respecto a mí</p>
-<p><strong>2.</strong> Es muy cierto en muchas ocasiones con respecto a mí</p>
-<p><strong>3.</strong> Es muy o en la mayoría de las veces cierto con respecto a mí</p>
-</div>
-<form id="pafasForm">
-<div class="datos-personales">
-<h3>Datos Personales</h3>
-<div class="form-group">
+    <div class="container">
+        <div class="header">
+            <h1>Escala de Adaptación de Crianza y Adaptación Familiar (PAFAS)</h1>
+            <p>Formulario para padres y madres</p>
+        </div>
+        <div class="form-content">
+            <div class="info-section">
+                <h3>Instrucciones</h3>
+                <p><strong>0.</strong> No es cierto en lo absoluto con respecto a mí</p>
+                <p><strong>1.</strong> Un poco o algunas veces cierto con respecto a mí</p>
+                <p><strong>2.</strong> Es muy cierto en muchas ocasiones con respecto a mí</p>
+                <p><strong>3.</strong> Es muy o en la mayoría de las veces cierto con respecto a mí</p>
+            </div>
+            <form id="pafasForm">
+                <div class="datos-personales">
+                    <h3>Datos Personales</h3>
+                    <div class="form-group">
                         <label for="nombre">Nombre completo <span class="required">*</span></label>
-                        <label for="nombre">Nombre completo (Hijo) <span class="required">*</span></label>
-<input type="text" id="nombre" name="nombre" required>
-<div class="error-message" id="error-nombre">Por favor, ingrese su nombre</div>
-</div>
-<div class="form-group">
-<label for="email">Correo electrónico <span class="required">*</span></label>
-<input type="email" id="email" name="email" required>
-<div class="error-message" id="error-email">Por favor, ingrese un correo válido</div>
-</div>
-<div class="form-group">
-<label for="edad">Edad del hijo/a <span class="required">*</span></label>
-<input type="number" id="edad" name="edad" min="0" max="18" required>
-<div class="error-message" id="error-edad">Por favor, ingrese la edad del hijo/a</div>
-</div>
-<div class="form-group">
-<label for="parentesco">Parentesco <span class="required">*</span></label>
-<select id="parentesco" name="parentesco" required>
-<option value="">Seleccione...</option>
-<option value="Madre">Madre</option>
-<option value="Padre">Padre</option>
-<option value="Tutor/a">Tutor/a</option>
-<option value="Otro">Otro</option>
-</select>
-<div class="error-message" id="error-parentesco">Por favor, seleccione el parentesco</div>
-</div>
-</div>
-<div id="questionsContainer"></div>
-<div class="submit-section">
-<button type="submit" class="submit-btn" id="submitBtn">Enviar Formulario</button>
-<div class="loading" id="loading">
-<div class="loading-spinner"></div>
-<p>Enviando respuestas...</p>
-</div>
-<div class="success-message" id="successMessage">
-¡Gracias! Sus respuestas han sido enviadas correctamente.
-</div>
-</div>
-</form>
-</div>
-</div>
-<script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxdD4c8NOTS1A0TLPvA5XG3rD8NwwUQaYuYW398YHGTldInXPcnsiauJkYxfNd5SUYu/exec';
-const cuestionario = {"data":[{"bloque":"Escala de adaptación de crianza y adaptación familiar (PAFAS)","clasificacion":["0. No es cierto en lo absoluto con respecto a mí","1. Un poco o algunas veces cierto con respecto a mí","2. Es muy cierto en muchas ocasiones con respecto a mí","3. Es muy o en la mayoría de las veces cierto con respecto a mí"],"items":[{"id":1,"pregunta":"1. Me rindo y realizo la faena yo mismo/a si mi hijo/a no hace lo que le pido.","respuestas":[0,1,2,3]},{"id":2,"pregunta":"2. Complazo a mi hijo/a con un premio o actividad de diversión por haberse portado bien.","respuestas":[0,1,2,3]},{"id":3,"pregunta":"3. Amenazo a mi hijo/a con algo (por ejemplo, que apague la TV) por su mal comportamiento, pero después no cumplo con la amenaza.","respuestas":[0,1,2,3]},{"id":4,"pregunta":"4. Grito o me enojo con mi hijo/a cuando él/ella se porta mal.","respuestas":[0,1,2,3]},{"id":5,"pregunta":"5. Alabo a mi hijo/a cuando se porta bien.","respuestas":[0,1,2,3]},{"id":6,"pregunta":"6. Hago sentir mal o culpable a mi hijo/a a propósito por portarse mal para darle una lección.","respuestas":[0,1,2,3]},{"id":7,"pregunta":"7. Le doy atención a mi hijo/a con un abrazo, un guiño de ojo, sonrisa o beso cuando él/ella se porta bien.","respuestas":[0,1,2,3]},{"id":8,"pregunta":"8. Le doy unas nalgadas a mi hijo/a cuando se porta mal.","respuestas":[0,1,2,3]},{"id":9,"pregunta":"9. Discuto con mi hijo/a sobre su mal comportamiento o actitud.","respuestas":[0,1,2,3]},{"id":10,"pregunta":"10. Cedo ante las demandas de mi hijo/a cuando él/ella se disgusta o altera.","respuestas":[0,1,2,3]},{"id":11,"pregunta":"11. Me enojo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":12,"pregunta":"12. Converso con mi hijo/a.","respuestas":[0,1,2,3]},{"id":13,"pregunta":"13. Disfruto con abrazar, besar y acurrucar a mi hijo/a.","respuestas":[0,1,2,3]},{"id":14,"pregunta":"14. Estoy orgulloso/a de mi hijo/a.","respuestas":[0,1,2,3]},{"id":15,"pregunta":"15. Disfruto pasar tiempo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":16,"pregunta":"16. Tengo una buena relación con mi hijo/a.","respuestas":[0,1,2,3]},{"id":17,"pregunta":"17. Me siento estresado/a o preocupado/a.","respuestas":[0,1,2,3]},{"id":18,"pregunta":"18. Me siento feliz.","respuestas":[0,1,2,3]},{"id":19,"pregunta":"19. Me siento triste o deprimido/a.","respuestas":[0,1,2,3]},{"id":20,"pregunta":"20. Me siento satisfecho/a con mi vida.","respuestas":[0,1,2,3]},{"id":21,"pregunta":"21. Sobrellevo las exigencias emocionales de ser padre/madre.","respuestas":[0,1,2,3]},{"id":22,"pregunta":"22. Los miembros de nuestra familia se ayudan y apoyan unos a otros.","respuestas":[0,1,2,3]},{"id":23,"pregunta":"23. Los miembros de nuestra familia se llevan bien entre sí.","respuestas":[0,1,2,3]},{"id":24,"pregunta":"24. Los miembros de nuestra familia pelean o discuten.","respuestas":[0,1,2,3]},{"id":25,"pregunta":"25. Los miembros de nuestra familia se critican entre sí.","respuestas":[0,1,2,3]},{"id":26,"pregunta":"26. ¿Usted se encuentra en una relación de pareja actualmente?","respuestas":["Sí","No"]},{"id":27,"pregunta":"27. Trabajo como un equipo con mi pareja en la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":28,"pregunta":"28. Estoy en desacuerdo con mi pareja sobre la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":29,"pregunta":"29. Tengo una buena relación con mi pareja.","requiere_pareja":true,"respuestas":[0,1,2,3]}]}]};
+                        <input type="text" id="nombre" name="nombre" required>
+                        <div class="error-message" id="error-nombre">Por favor, ingrese su nombre</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message" id="error-email">Por favor, ingrese un correo válido</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edad">Edad del hijo/a <span class="required">*</span></label>
+                        <input type="number" id="edad" name="edad" min="0" max="18" required>
+                        <div class="error-message" id="error-edad">Por favor, ingrese la edad del hijo/a</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentesco">Parentesco <span class="required">*</span></label>
+                        <select id="parentesco" name="parentesco" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Madre">Madre</option>
+                            <option value="Padre">Padre</option>
+                            <option value="Tutor/a">Tutor/a</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <div class="error-message" id="error-parentesco">Por favor, seleccione el parentesco</div>
+                    </div>
+                </div>
+                <div id="questionsContainer"></div>
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" id="submitBtn">Enviar Formulario</button>
+                    <div class="loading" id="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Enviando respuestas...</p>
+                    </div>
+                    <div class="success-message" id="successMessage">
+                        ¡Gracias! Sus respuestas han sido enviadas correctamente.
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxdD4c8NOTS1A0TLPvA5XG3rD8NwwUQaYuYW398YHGTldInXPcnsiauJkYxfNd5SUYu/exec';
+        const cuestionario = {"data":[{"bloque":"Escala de adaptación de crianza y adaptación familiar (PAFAS)","clasificacion":["0. No es cierto en lo absoluto con respecto a mí","1. Un poco o algunas veces cierto con respecto a mí","2. Es muy cierto en muchas ocasiones con respecto a mí","3. Es muy o en la mayoría de las veces cierto con respecto a mí"],"items":[{"id":1,"pregunta":"1. Me rindo y realizo la faena yo mismo/a si mi hijo/a no hace lo que le pido.","respuestas":[0,1,2,3]},{"id":2,"pregunta":"2. Complazo a mi hijo/a con un premio o actividad de diversión por haberse portado bien.","respuestas":[0,1,2,3]},{"id":3,"pregunta":"3. Amenazo a mi hijo/a con algo (por ejemplo, que apague la TV) por su mal comportamiento, pero después no cumplo con la amenaza.","respuestas":[0,1,2,3]},{"id":4,"pregunta":"4. Grito o me enojo con mi hijo/a cuando él/ella se porta mal.","respuestas":[0,1,2,3]},{"id":5,"pregunta":"5. Alabo a mi hijo/a cuando se porta bien.","respuestas":[0,1,2,3]},{"id":6,"pregunta":"6. Hago sentir mal o culpable a mi hijo/a a propósito por portarse mal para darle una lección.","respuestas":[0,1,2,3]},{"id":7,"pregunta":"7. Le doy atención a mi hijo/a con un abrazo, un guiño de ojo, sonrisa o beso cuando él/ella se porta bien.","respuestas":[0,1,2,3]},{"id":8,"pregunta":"8. Le doy unas nalgadas a mi hijo/a cuando se porta mal.","respuestas":[0,1,2,3]},{"id":9,"pregunta":"9. Discuto con mi hijo/a sobre su mal comportamiento o actitud.","respuestas":[0,1,2,3]},{"id":10,"pregunta":"10. Cedo ante las demandas de mi hijo/a cuando él/ella se disgusta o altera.","respuestas":[0,1,2,3]},{"id":11,"pregunta":"11. Me enojo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":12,"pregunta":"12. Converso con mi hijo/a.","respuestas":[0,1,2,3]},{"id":13,"pregunta":"13. Disfruto con abrazar, besar y acurrucar a mi hijo/a.","respuestas":[0,1,2,3]},{"id":14,"pregunta":"14. Estoy orgulloso/a de mi hijo/a.","respuestas":[0,1,2,3]},{"id":15,"pregunta":"15. Disfruto pasar tiempo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":16,"pregunta":"16. Tengo una buena relación con mi hijo/a.","respuestas":[0,1,2,3]},{"id":17,"pregunta":"17. Me siento estresado/a o preocupado/a.","respuestas":[0,1,2,3]},{"id":18,"pregunta":"18. Me siento feliz.","respuestas":[0,1,2,3]},{"id":19,"pregunta":"19. Me siento triste o deprimido/a.","respuestas":[0,1,2,3]},{"id":20,"pregunta":"20. Me siento satisfecho/a con mi vida.","respuestas":[0,1,2,3]},{"id":21,"pregunta":"21. Sobrellevo las exigencias emocionales de ser padre/madre.","respuestas":[0,1,2,3]},{"id":22,"pregunta":"22. Los miembros de nuestra familia se ayudan y apoyan unos a otros.","respuestas":[0,1,2,3]},{"id":23,"pregunta":"23. Los miembros de nuestra familia se llevan bien entre sí.","respuestas":[0,1,2,3]},{"id":24,"pregunta":"24. Los miembros de nuestra familia pelean o discuten.","respuestas":[0,1,2,3]},{"id":25,"pregunta":"25. Los miembros de nuestra familia se critican entre sí.","respuestas":[0,1,2,3]},{"id":26,"pregunta":"26. ¿Usted se encuentra en una relación de pareja actualmente?","respuestas":["Sí","No"]},{"id":27,"pregunta":"27. Trabajo como un equipo con mi pareja en la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":28,"pregunta":"28. Estoy en desacuerdo con mi pareja sobre la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":29,"pregunta":"29. Tengo una buena relación con mi pareja.","requiere_pareja":true,"respuestas":[0,1,2,3]}]}]};
 
-function generarPreguntas() {
-const container = document.getElementById('questionsContainer');
-const items = cuestionario.data[0].items;
-items.forEach(item => {
-const questionDiv = document.createElement('div');
-questionDiv.className = 'question-block';
-questionDiv.id = `question-${item.id}`;
-if (item.requiere_pareja) questionDiv.style.display = 'none';
-let optionsHtml = '';
-if (item.id === 26) {
-optionsHtml = `<div class="options-container">
-                       <label class="option-label"><input type="radio" name="q${item.id}" value="Sí" onchange="toggleParejaQuestions('Sí')" required><span>Sí</span></label>
-                       <label class="option-label"><input type="radio" name="q${item.id}" value="No" onchange="toggleParejaQuestions('No')" required><span>No</span></label>
-                   </div>`;
-} else {
-const clasificacion = cuestionario.data[0].clasificacion;
-optionsHtml = '<div class="options-container">';
-item.respuestas.forEach((valor, index) => {
-const req = item.requiere_pareja ? '' : 'required';
-optionsHtml += `<label class="option-label"><input type="radio" name="q${item.id}" value="${valor}" ${req}><span>${clasificacion[index]}</span></label>`;
-});
-optionsHtml += '</div>';
-}
-questionDiv.innerHTML = `<div class="question-text"><span class="question-number">${item.id}</span>${item.pregunta}</div>${optionsHtml}`;
-container.appendChild(questionDiv);
-});
-}
+        function generarPreguntas() {
+            const container = document.getElementById('questionsContainer');
+            const items = cuestionario.data[0].items;
+            items.forEach(item => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-block';
+                questionDiv.id = `question-${item.id}`;
+                if (item.requiere_pareja) questionDiv.style.display = 'none';
+                let optionsHtml = '';
+                if (item.id === 26) {
+                    optionsHtml = `<div class="options-container">
+                        <label class="option-label"><input type="radio" name="q${item.id}" value="Sí" onchange="toggleParejaQuestions('Sí')" required><span>Sí</span></label>
+                        <label class="option-label"><input type="radio" name="q${item.id}" value="No" onchange="toggleParejaQuestions('No')" required><span>No</span></label>
+                    </div>`;
+                } else {
+                    const clasificacion = cuestionario.data[0].clasificacion;
+                    optionsHtml = '<div class="options-container">';
+                    item.respuestas.forEach((valor, index) => {
+                        const req = item.requiere_pareja ? '' : 'required';
+                        optionsHtml += `<label class="option-label"><input type="radio" name="q${item.id}" value="${valor}" ${req}><span>${clasificacion[index]}</span></label>`;
+                    });
+                    optionsHtml += '</div>';
+                }
+                questionDiv.innerHTML = `<div class="question-text"><span class="question-number">${item.id}</span>${item.pregunta}</div>${optionsHtml}`;
+                container.appendChild(questionDiv);
+            });
+        }
 
-function toggleParejaQuestions(value) {
-const parejaQuestions = [27, 28, 29];
-parejaQuestions.forEach(id => {
-const questionDiv = document.getElementById(`question-${id}`);
-if (questionDiv) {
-questionDiv.style.display = value === 'Sí' ? 'block' : 'none';
-const radios = questionDiv.querySelectorAll('input[type="radio"]');
-radios.forEach(radio => {
-radio.checked = false;
-if (value === 'Sí') {
-radio.setAttribute('required', 'required');
-} else {
-radio.removeAttribute('required');
-}
-});
-}
-});
-}
+        function toggleParejaQuestions(value) {
+            const parejaQuestions = [27, 28, 29];
+            parejaQuestions.forEach(id => {
+                const questionDiv = document.getElementById(`question-${id}`);
+                if (questionDiv) {
+                    questionDiv.style.display = value === 'Sí' ? 'block' : 'none';
+                    const radios = questionDiv.querySelectorAll('input[type="radio"]');
+                    radios.forEach(radio => {
+                        radio.checked = false;
+                        if (value === 'Sí') {
+                            radio.setAttribute('required', 'required');
+                        } else {
+                            radio.removeAttribute('required');
+                        }
+                    });
+                }
+            });
+        }
 
-function validarFormulario() {
-let valido = true;
-['nombre', 'email', 'edad', 'parentesco'].forEach(campo => {
-const input = document.getElementById(campo);
-const error = document.getElementById(`error-${campo}`);
-if (!input.value.trim()) {
-error.style.display = 'block';
-input.style.borderColor = '#dc3545';
-valido = false;
-} else {
-error.style.display = 'none';
-input.style.borderColor = '#e9ecef';
-}
-});
-cuestionario.data[0].items.forEach(item => {
-const questionDiv = document.getElementById(`question-${item.id}`);
-if (questionDiv && questionDiv.style.display !== 'none') {
-const radios = document.getElementsByName(`q${item.id}`);
-const checked = Array.from(radios).some(radio => radio.checked);
-questionDiv.style.borderColor = checked ? '#e9ecef' : '#dc3545';
-if (!checked) valido = false;
-}
-});
-return valido;
-}
+        function validarFormulario() {
+            let valido = true;
+            ['nombre', 'email', 'edad', 'parentesco'].forEach(campo => {
+                const input = document.getElementById(campo);
+                const error = document.getElementById(`error-${campo}`);
+                if (!input.value.trim()) {
+                    error.style.display = 'block';
+                    input.style.borderColor = '#dc3545';
+                    valido = false;
+                } else {
+                    error.style.display = 'none';
+                    input.style.borderColor = '#e9ecef';
+                }
+            });
+            cuestionario.data[0].items.forEach(item => {
+                const questionDiv = document.getElementById(`question-${item.id}`);
+                if (questionDiv && questionDiv.style.display !== 'none') {
+                    const radios = document.getElementsByName(`q${item.id}`);
+                    const checked = Array.from(radios).some(radio => radio.checked);
+                    questionDiv.style.borderColor = checked ? '#e9ecef' : '#dc3545';
+                    if (!checked) valido = false;
+                }
+            });
+            return valido;
+        }
 
-document.getElementById('pafasForm').addEventListener('submit', async function(e) {
-e.preventDefault();
-if (!validarFormulario()) {
-alert('Por favor, complete todos los campos requeridos.');
-return;
-}
-const formData = {
-timestamp: new Date().toISOString(),
-nombre: document.getElementById('nombre').value,
-email: document.getElementById('email').value,
-edad: document.getElementById('edad').value,
-parentesco: document.getElementById('parentesco').value,
-respuestas: {}
-};
-cuestionario.data[0].items.forEach(item => {
-const questionDiv = document.getElementById(`question-${item.id}`);
-if (questionDiv && questionDiv.style.display !== 'none') {
-const selected = document.querySelector(`input[name="q${item.id}"]:checked`);
-if (selected) formData.respuestas[`pregunta_${item.id}`] = selected.value;
-}
-});
-document.getElementById('submitBtn').disabled = true;
-document.getElementById('loading').style.display = 'block';
-try {
-await fetch(SCRIPT_URL, {
-method: 'POST',
-mode: 'no-cors',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify(formData)
-});
-document.getElementById('loading').style.display = 'none';
-document.getElementById('successMessage').style.display = 'block';
-document.getElementById('pafasForm').reset();
-toggleParejaQuestions('No');
-document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
-setTimeout(() => {
-document.getElementById('submitBtn').disabled = false;
-document.getElementById('successMessage').style.display = 'none';
-}, 5000);
-} catch (error) {
-document.getElementById('loading').style.display = 'none';
-document.getElementById('successMessage').style.display = 'block';
-document.getElementById('pafasForm').reset();
-setTimeout(() => {
-document.getElementById('submitBtn').disabled = false;
-document.getElementById('successMessage').style.display = 'none';
-}, 5000);
-}
-});
+        document.getElementById('pafasForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!validarFormulario()) {
+                alert('Por favor, complete todos los campos requeridos.');
+                return;
+            }
+            const formData = {
+                timestamp: new Date().toISOString(),
+                nombre: document.getElementById('nombre').value,
+                email: document.getElementById('email').value,
+                edad: document.getElementById('edad').value,
+                parentesco: document.getElementById('parentesco').value,
+                respuestas: {}
+            };
+            cuestionario.data[0].items.forEach(item => {
+                const questionDiv = document.getElementById(`question-${item.id}`);
+                if (questionDiv && questionDiv.style.display !== 'none') {
+                    const selected = document.querySelector(`input[name="q${item.id}"]:checked`);
+                    if (selected) formData.respuestas[`pregunta_${item.id}`] = selected.value;
+                }
+            });
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('pafasForm').reset();
+                toggleParejaQuestions('No');
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('pafasForm').reset();
+                setTimeout(() => {
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            }
+        });
 
-document.addEventListener('DOMContentLoaded', function() {
-generarPreguntas();
-});
-</script>
+        document.addEventListener('DOMContentLoaded', function() {
+            generarPreguntas();
+        });
+    </script>
 </body>
+</html>
