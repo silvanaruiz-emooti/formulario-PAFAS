@@ -36,38 +36,10 @@
         .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }
         .submit-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
         .error-message { color: #dc3545; font-size: 14px; margin-top: 5px; display: none; }
-        
-        /* Estilos para la pantalla de éxito */
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 40px;
-            border-radius: 10px;
-            border: 2px solid #c3e6cb;
-            margin: 20px;
-            text-align: center;
-            font-size: 1.2em;
-        }
-        
-        .success-message h2 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-        
-        .loading { 
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
+        .success-message { background: #d4edda; color: #155724; padding: 40px; border-radius: 10px; border: 2px solid #c3e6cb; margin: 20px; text-align: center; font-size: 1.2em; }
+        .success-message h2 { font-size: 1.8em; margin-bottom: 15px; }
+        .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .required { color: #dc3545; }
         @media (max-width: 768px) {
             body { padding: 10px; }
@@ -79,349 +51,401 @@
     </style>
 </head>
 <body>
-    <!-- Iframe oculto para envío a Google Apps Script -->
+    <!-- Iframe oculto para envío a Google Apps Script (evita CORS) -->
     <iframe name="pafas-submit-iframe" id="pafas-submit-iframe" style="display:none; width:0; height:0; border:0;" title="Envío de datos"></iframe>
     
     <div class="container" id="app-container">
-        <div class="header">
-            <h1>Escala de Adaptación de Crianza y Adaptación Familiar (PAFAS)</h1>
-            <p>Formulario para padres y madres</p>
-        </div>
-        <div class="form-content">
-            <div class="info-section">
-                <h3>Instrucciones</h3>
-                <p><strong>0.</strong> No es cierto en lo absoluto con respecto a mí</p>
-                <p><strong>1.</strong> Un poco o algunas veces cierto con respecto a mí</p>
-                <p><strong>2.</strong> Es muy cierto en muchas ocasiones con respecto a mí</p>
-                <p><strong>3.</strong> Es muy o en la mayoría de las veces cierto con respecto a mí</p>
-            </div>
-            <form id="pafasForm">
-                <div class="datos-personales">
-                    <h3>Datos Personales</h3>
-                    <div class="form-group">
-                        <label for="nombre">Nombre completo (Hijo/a) <span class="required">*</span></label>
-                        <input type="text" id="nombre" name="nombre" required>
-                        <div class="error-message" id="error-nombre">Por favor, ingrese el nombre</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Correo electrónico <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error-message" id="error-email">Por favor, ingrese un correo válido</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="parentesco">Parentesco <span class="required">*</span></label>
-                        <select id="parentesco" name="parentesco" required>
-                            <option value="">Seleccione...</option>
-                            <option value="Madre">Madre</option>
-                            <option value="Padre">Padre</option>
-                            <option value="Tutor/a">Tutor/a</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                        <div class="error-message" id="error-parentesco">Por favor, seleccione el parentesco</div>
-                    </div>
-                </div>
-                <div id="questionsContainer"></div>
-                <div class="submit-section">
-                    <button type="submit" class="submit-btn" id="submitBtn">Enviar Formulario</button>
-                </div>
-            </form>
-        </div>
+        <!-- El contenido se generará dinámicamente -->
     </div>
 
+    <!-- CONFIGURACIÓN GOOGLE SHEETS -->
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxdD4c8NOTS1A0TLPvA5XG3rD8NwwUQaYuYW398YHGTldInXPcnsiauJkYxfNd5SUYu/exec';
-        
-        const cuestionario = {"data":[{"bloque":"Escala de adaptación de crianza y adaptación familiar (PAFAS)","clasificacion":["0. No es cierto en lo absoluto con respecto a mí","1. Un poco o algunas veces cierto con respecto a mí","2. Es muy cierto en muchas ocasiones con respecto a mí","3. Es muy o en la mayoría de las veces cierto con respecto a mí"],"items":[{"id":1,"pregunta":"1. Me rindo y realizo la faena yo mismo/a si mi hijo/a no hace lo que le pido.","respuestas":[0,1,2,3]},{"id":2,"pregunta":"2. Complazo a mi hijo/a con un premio o actividad de diversión por haberse portado bien.","respuestas":[0,1,2,3]},{"id":3,"pregunta":"3. Amenazo a mi hijo/a con algo (por ejemplo, que apague la TV) por su mal comportamiento, pero después no cumplo con la amenaza.","respuestas":[0,1,2,3]},{"id":4,"pregunta":"4. Grito o me enojo con mi hijo/a cuando él/ella se porta mal.","respuestas":[0,1,2,3]},{"id":5,"pregunta":"5. Alabo a mi hijo/a cuando se porta bien.","respuestas":[0,1,2,3]},{"id":6,"pregunta":"6. Hago sentir mal o culpable a mi hijo/a a propósito por portarse mal para darle una lección.","respuestas":[0,1,2,3]},{"id":7,"pregunta":"7. Le doy atención a mi hijo/a con un abrazo, un guiño de ojo, sonrisa o beso cuando él/ella se porta bien.","respuestas":[0,1,2,3]},{"id":8,"pregunta":"8. Le doy unas nalgadas a mi hijo/a cuando se porta mal.","respuestas":[0,1,2,3]},{"id":9,"pregunta":"9. Discuto con mi hijo/a sobre su mal comportamiento o actitud.","respuestas":[0,1,2,3]},{"id":10,"pregunta":"10. Cedo ante las demandas de mi hijo/a cuando él/ella se disgusta o altera.","respuestas":[0,1,2,3]},{"id":11,"pregunta":"11. Me enojo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":12,"pregunta":"12. Converso con mi hijo/a.","respuestas":[0,1,2,3]},{"id":13,"pregunta":"13. Disfruto con abrazar, besar y acurrucar a mi hijo/a.","respuestas":[0,1,2,3]},{"id":14,"pregunta":"14. Estoy orgulloso/a de mi hijo/a.","respuestas":[0,1,2,3]},{"id":15,"pregunta":"15. Disfruto pasar tiempo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":16,"pregunta":"16. Tengo una buena relación con mi hijo/a.","respuestas":[0,1,2,3]},{"id":17,"pregunta":"17. Me siento estresado/a o preocupado/a.","respuestas":[0,1,2,3]},{"id":18,"pregunta":"18. Me siento feliz.","respuestas":[0,1,2,3]},{"id":19,"pregunta":"19. Me siento triste o deprimido/a.","respuestas":[0,1,2,3]},{"id":20,"pregunta":"20. Me siento satisfecho/a con mi vida.","respuestas":[0,1,2,3]},{"id":21,"pregunta":"21. Sobrellevo las exigencias emocionales de ser padre/madre.","respuestas":[0,1,2,3]},{"id":22,"pregunta":"22. Los miembros de nuestra familia se ayudan y apoyan unos a otros.","respuestas":[0,1,2,3]},{"id":23,"pregunta":"23. Los miembros de nuestra familia se llevan bien entre sí.","respuestas":[0,1,2,3]},{"id":24,"pregunta":"24. Los miembros de nuestra familia pelean o discuten.","respuestas":[0,1,2,3]},{"id":25,"pregunta":"25. Los miembros de nuestra familia se critican entre sí.","respuestas":[0,1,2,3]},{"id":26,"pregunta":"26. ¿Usted se encuentra en una relación de pareja actualmente?","respuestas":["Sí","No"]},{"id":27,"pregunta":"27. Trabajo como un equipo con mi pareja en la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":28,"pregunta":"28. Estoy en desacuerdo con mi pareja sobre la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":29,"pregunta":"29. Tengo una buena relación con mi pareja.","requiere_pareja":true,"respuestas":[0,1,2,3]}]}]};
+    // ========================================
+    // IMPORTANTE: Reemplaza con tu URL de Google Apps Script
+    // ========================================
+    window.SHEETS_ENDPOINT_URL = 'https://script.google.com/macros/s/AKfycbxdD4c8NOTS1A0TLPvA5XG3rD8NwwUQaYuYW398YHGTldInXPcnsiauJkYxfNd5SUYu/exec';
+    console.log('[PAFAS] URL configurada:', window.SHEETS_ENDPOINT_URL);
+    </script>
 
-        function generarPreguntas() {
-            const container = document.getElementById("questionsContainer");
-            const items = cuestionario.data[0].items;
+    <script>
+    // =====================
+    // CONFIGURACIÓN
+    // =====================
+    const GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1rNUdW2zOIrRLbwR5hHgIrBkr2KnrHunAKt4oIMpeaUI/edit?gid=0#gid=0";  // <- (opcional) URL del Google Sheet (solo referencia/debug)
+    const SHEETS_ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxdD4c8NOTS1A0TLPvA5XG3rD8NwwUQaYuYW398YHGTldInXPcnsiauJkYxfNd5SUYu/exec";  // <- URL del Web App (Apps Script)
+    
+    // Para que el formulario use este endpoint al enviar
+    if (typeof SHEETS_ENDPOINT_URL === "string" && SHEETS_ENDPOINT_URL.length > 0) {
+        window.SHEETS_ENDPOINT_URL = SHEETS_ENDPOINT_URL;
+    }
+    </script>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ============================================
+            // VARIABLES GLOBALES
+            // ============================================
+            let submitUrl = null;
+            let formStartTimestamp = Date.now();
             
-            items.forEach(item => {
-                const questionDiv = document.createElement("div");
-                questionDiv.className = "question-block";
-                questionDiv.id = `question-${item.id}`;
-                
-                if (item.requiere_pareja) {
-                    questionDiv.style.display = "none";
-                }
-                
-                let optionsHTML = "";
-                
-                if (item.id === 26) {
-                    optionsHTML = `
-                        <div class="options-container">
-                            <label class="option-label">
-                                <input type="radio" name="q${item.id}" value="Sí" onchange="toggleParejaQuestions('Sí')" required>
-                                <span>Sí</span>
-                            </label>
-                            <label class="option-label">
-                                <input type="radio" name="q${item.id}" value="No" onchange="toggleParejaQuestions('No')" required>
-                                <span>No</span>
-                            </label>
-                        </div>
-                    `;
-                } else {
-                    const labels = cuestionario.data[0].clasificacion;
-                    optionsHTML = '<div class="options-container">';
-                    
-                    item.respuestas.forEach((valor, index) => {
-                        const requiredAttr = item.requiere_pareja ? '' : 'required';
-                        optionsHTML += `
-                            <label class="option-label">
-                                <input type="radio" name="q${item.id}" value="${valor}" ${requiredAttr}>
-                                <span>${labels[index]}</span>
-                            </label>
-                        `;
-                    });
-                    
-                    optionsHTML += '</div>';
-                }
-                
-                questionDiv.innerHTML = `
-                    <div class="question-text">
-                        <span class="question-number">${item.id}</span>
-                        ${item.pregunta}
+            const cuestionario = {"data":[{"bloque":"Escala de adaptación de crianza y adaptación familiar (PAFAS)","clasificacion":["0. No es cierto en lo absoluto con respecto a mí","1. Un poco o algunas veces cierto con respecto a mí","2. Es muy cierto en muchas ocasiones con respecto a mí","3. Es muy o en la mayoría de las veces cierto con respecto a mí"],"items":[{"id":1,"pregunta":"1. Me rindo y realizo la faena yo mismo/a si mi hijo/a no hace lo que le pido.","respuestas":[0,1,2,3]},{"id":2,"pregunta":"2. Complazo a mi hijo/a con un premio o actividad de diversión por haberse portado bien.","respuestas":[0,1,2,3]},{"id":3,"pregunta":"3. Amenazo a mi hijo/a con algo (por ejemplo, que apague la TV) por su mal comportamiento, pero después no cumplo con la amenaza.","respuestas":[0,1,2,3]},{"id":4,"pregunta":"4. Grito o me enojo con mi hijo/a cuando él/ella se porta mal.","respuestas":[0,1,2,3]},{"id":5,"pregunta":"5. Alabo a mi hijo/a cuando se porta bien.","respuestas":[0,1,2,3]},{"id":6,"pregunta":"6. Hago sentir mal o culpable a mi hijo/a a propósito por portarse mal para darle una lección.","respuestas":[0,1,2,3]},{"id":7,"pregunta":"7. Le doy atención a mi hijo/a con un abrazo, un guiño de ojo, sonrisa o beso cuando él/ella se porta bien.","respuestas":[0,1,2,3]},{"id":8,"pregunta":"8. Le doy unas nalgadas a mi hijo/a cuando se porta mal.","respuestas":[0,1,2,3]},{"id":9,"pregunta":"9. Discuto con mi hijo/a sobre su mal comportamiento o actitud.","respuestas":[0,1,2,3]},{"id":10,"pregunta":"10. Cedo ante las demandas de mi hijo/a cuando él/ella se disgusta o altera.","respuestas":[0,1,2,3]},{"id":11,"pregunta":"11. Me enojo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":12,"pregunta":"12. Converso con mi hijo/a.","respuestas":[0,1,2,3]},{"id":13,"pregunta":"13. Disfruto con abrazar, besar y acurrucar a mi hijo/a.","respuestas":[0,1,2,3]},{"id":14,"pregunta":"14. Estoy orgulloso/a de mi hijo/a.","respuestas":[0,1,2,3]},{"id":15,"pregunta":"15. Disfruto pasar tiempo con mi hijo/a.","respuestas":[0,1,2,3]},{"id":16,"pregunta":"16. Tengo una buena relación con mi hijo/a.","respuestas":[0,1,2,3]},{"id":17,"pregunta":"17. Me siento estresado/a o preocupado/a.","respuestas":[0,1,2,3]},{"id":18,"pregunta":"18. Me siento feliz.","respuestas":[0,1,2,3]},{"id":19,"pregunta":"19. Me siento triste o deprimido/a.","respuestas":[0,1,2,3]},{"id":20,"pregunta":"20. Me siento satisfecho/a con mi vida.","respuestas":[0,1,2,3]},{"id":21,"pregunta":"21. Sobrellevo las exigencias emocionales de ser padre/madre.","respuestas":[0,1,2,3]},{"id":22,"pregunta":"22. Los miembros de nuestra familia se ayudan y apoyan unos a otros.","respuestas":[0,1,2,3]},{"id":23,"pregunta":"23. Los miembros de nuestra familia se llevan bien entre sí.","respuestas":[0,1,2,3]},{"id":24,"pregunta":"24. Los miembros de nuestra familia pelean o discuten.","respuestas":[0,1,2,3]},{"id":25,"pregunta":"25. Los miembros de nuestra familia se critican entre sí.","respuestas":[0,1,2,3]},{"id":26,"pregunta":"26. ¿Usted se encuentra en una relación de pareja actualmente?","respuestas":["Sí","No"]},{"id":27,"pregunta":"27. Trabajo como un equipo con mi pareja en la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":28,"pregunta":"28. Estoy en desacuerdo con mi pareja sobre la crianza.","requiere_pareja":true,"respuestas":[0,1,2,3]},{"id":29,"pregunta":"29. Tengo una buena relación con mi pareja.","requiere_pareja":true,"respuestas":[0,1,2,3]}]}]};
+
+            // ============================================
+            // INICIALIZACIÓN
+            // ============================================
+            function init() {
+                console.log('[PAFAS] Iniciando aplicación...');
+                submitUrl = window.SHEETS_ENDPOINT_URL || '/api/functions/submitPAFASPublic';
+                console.log('[PAFAS] URL de envío:', submitUrl);
+                renderForm();
+            }
+
+            function renderForm() {
+                const container = document.getElementById('app-container');
+                container.innerHTML = `
+                    <div class="header">
+                        <h1>Escala de Adaptación de Crianza y Adaptación Familiar (PAFAS)</h1>
+                        <p>Formulario para padres y madres</p>
                     </div>
-                    ${optionsHTML}
+                    <div class="form-content">
+                        <div class="info-section">
+                            <h3>Instrucciones</h3>
+                            <p><strong>0.</strong> No es cierto en lo absoluto con respecto a mí</p>
+                            <p><strong>1.</strong> Un poco o algunas veces cierto con respecto a mí</p>
+                            <p><strong>2.</strong> Es muy cierto en muchas ocasiones con respecto a mí</p>
+                            <p><strong>3.</strong> Es muy o en la mayoría de las veces cierto con respecto a mí</p>
+                        </div>
+                        <form id="pafasForm">
+                            <div class="datos-personales">
+                                <h3>Datos Personales</h3>
+                                <div class="form-group">
+                                    <label for="nombre">Nombre completo (Hijo/a) <span class="required">*</span></label>
+                                    <input type="text" id="nombre" name="nombre" required>
+                                    <div class="error-message" id="error-nombre">Por favor, ingrese el nombre</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Correo electrónico <span class="required">*</span></label>
+                                    <input type="email" id="email" name="email" required>
+                                    <div class="error-message" id="error-email">Por favor, ingrese un correo válido</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="parentesco">Parentesco <span class="required">*</span></label>
+                                    <select id="parentesco" name="parentesco" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="Madre">Madre</option>
+                                        <option value="Padre">Padre</option>
+                                        <option value="Tutor/a">Tutor/a</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                    <div class="error-message" id="error-parentesco">Por favor, seleccione el parentesco</div>
+                                </div>
+                            </div>
+                            <div id="questionsContainer"></div>
+                            <div class="submit-section">
+                                <button type="submit" class="submit-btn" id="submitBtn">Enviar Formulario</button>
+                            </div>
+                        </form>
+                    </div>
                 `;
                 
-                container.appendChild(questionDiv);
-            });
-        }
+                generarPreguntas();
+                document.getElementById('pafasForm').addEventListener('submit', handleSubmit);
+            }
 
-        function toggleParejaQuestions(respuesta) {
-            const preguntasPareja = [27, 28, 29];
-            
-            preguntasPareja.forEach(id => {
-                const questionDiv = document.getElementById(`question-${id}`);
-                if (questionDiv) {
-                    if (respuesta === 'Sí') {
-                        questionDiv.style.display = 'block';
-                        questionDiv.querySelectorAll('input[type="radio"]').forEach(input => {
-                            input.checked = false;
-                            input.setAttribute('required', 'required');
-                        });
-                    } else {
-                        questionDiv.style.display = 'none';
-                        questionDiv.querySelectorAll('input[type="radio"]').forEach(input => {
-                            input.checked = false;
-                            input.removeAttribute('required');
-                        });
-                    }
-                }
-            });
-        }
-
-        function validarFormulario() {
-            let esValido = true;
-            
-            // Validar datos personales
-            ['nombre', 'email', 'parentesco'].forEach(campo => {
-                const input = document.getElementById(campo);
-                if (!input) return;
+            function generarPreguntas() {
+                const container = document.getElementById("questionsContainer");
+                const items = cuestionario.data[0].items;
                 
-                const errorDiv = document.getElementById(`error-${campo}`);
-                
-                if (!input.value.trim()) {
-                    if (errorDiv) errorDiv.style.display = 'block';
-                    input.style.borderColor = '#dc3545';
-                    esValido = false;
-                } else {
-                    if (errorDiv) errorDiv.style.display = 'none';
-                    input.style.borderColor = '#e9ecef';
-                }
-            });
-            
-            // Validar preguntas
-            cuestionario.data[0].items.forEach(item => {
-                const questionDiv = document.getElementById(`question-${item.id}`);
-                
-                if (questionDiv && questionDiv.style.display !== 'none') {
-                    const inputs = document.getElementsByName(`q${item.id}`);
-                    const algunoSeleccionado = Array.from(inputs).some(input => input.checked);
+                items.forEach(item => {
+                    const questionDiv = document.createElement("div");
+                    questionDiv.className = "question-block";
+                    questionDiv.id = `question-${item.id}`;
                     
-                    if (!algunoSeleccionado) {
-                        questionDiv.style.borderColor = '#dc3545';
+                    if (item.requiere_pareja) {
+                        questionDiv.style.display = "none";
+                    }
+                    
+                    let optionsHTML = "";
+                    
+                    if (item.id === 26) {
+                        optionsHTML = `
+                            <div class="options-container">
+                                <label class="option-label">
+                                    <input type="radio" name="q${item.id}" value="Sí" onchange="window.toggleParejaQuestions('Sí')" required>
+                                    <span>Sí</span>
+                                </label>
+                                <label class="option-label">
+                                    <input type="radio" name="q${item.id}" value="No" onchange="window.toggleParejaQuestions('No')" required>
+                                    <span>No</span>
+                                </label>
+                            </div>
+                        `;
+                    } else {
+                        const labels = cuestionario.data[0].clasificacion;
+                        optionsHTML = '<div class="options-container">';
+                        
+                        item.respuestas.forEach((valor, index) => {
+                            const requiredAttr = item.requiere_pareja ? '' : 'required';
+                            optionsHTML += `
+                                <label class="option-label">
+                                    <input type="radio" name="q${item.id}" value="${valor}" ${requiredAttr}>
+                                    <span>${labels[index]}</span>
+                                </label>
+                            `;
+                        });
+                        
+                        optionsHTML += '</div>';
+                    }
+                    
+                    questionDiv.innerHTML = `
+                        <div class="question-text">
+                            <span class="question-number">${item.id}</span>
+                            ${item.pregunta}
+                        </div>
+                        ${optionsHTML}
+                    `;
+                    
+                    container.appendChild(questionDiv);
+                });
+            }
+
+            window.toggleParejaQuestions = function(respuesta) {
+                const preguntasPareja = [27, 28, 29];
+                
+                preguntasPareja.forEach(id => {
+                    const questionDiv = document.getElementById(`question-${id}`);
+                    if (questionDiv) {
+                        if (respuesta === 'Sí') {
+                            questionDiv.style.display = 'block';
+                            questionDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                                input.checked = false;
+                                input.setAttribute('required', 'required');
+                            });
+                        } else {
+                            questionDiv.style.display = 'none';
+                            questionDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                                input.checked = false;
+                                input.removeAttribute('required');
+                            });
+                        }
+                    }
+                });
+            };
+
+            function validarFormulario() {
+                let esValido = true;
+                
+                ['nombre', 'email', 'parentesco'].forEach(campo => {
+                    const input = document.getElementById(campo);
+                    if (!input) return;
+                    
+                    const errorDiv = document.getElementById(`error-${campo}`);
+                    
+                    if (!input.value.trim()) {
+                        if (errorDiv) errorDiv.style.display = 'block';
+                        input.style.borderColor = '#dc3545';
                         esValido = false;
                     } else {
-                        questionDiv.style.borderColor = '#e9ecef';
+                        if (errorDiv) errorDiv.style.display = 'none';
+                        input.style.borderColor = '#e9ecef';
                     }
-                }
-            });
-            
-            return esValido;
-        }
-
-        function buildPayload() {
-            const payload = {
-                timestamp: new Date().toISOString(),
-                nombre: document.getElementById('nombre').value,
-                email: document.getElementById('email').value,
-                edad: 'N/A',
-                parentesco: document.getElementById('parentesco').value,
-                respuestas: {}
-            };
-            
-            cuestionario.data[0].items.forEach(item => {
-                const questionDiv = document.getElementById(`question-${item.id}`);
+                });
                 
-                if (questionDiv && questionDiv.style.display !== 'none') {
-                    const input = document.querySelector(`input[name="q${item.id}"]:checked`);
-                    if (input) {
-                        payload.respuestas[`pregunta_${item.id}`] = input.value;
+                cuestionario.data[0].items.forEach(item => {
+                    const questionDiv = document.getElementById(`question-${item.id}`);
+                    
+                    if (questionDiv && questionDiv.style.display !== 'none') {
+                        const inputs = document.getElementsByName(`q${item.id}`);
+                        const algunoSeleccionado = Array.from(inputs).some(input => input.checked);
+                        
+                        if (!algunoSeleccionado) {
+                            questionDiv.style.borderColor = '#dc3545';
+                            esValido = false;
+                        } else {
+                            questionDiv.style.borderColor = '#e9ecef';
+                        }
                     }
-                }
-            });
-            
-            return payload;
-        }
-
-        function submitViaFormToIframe(payload, btn) {
-            console.log('[PAFAS] Enviando vía iframe a Google Apps Script');
-            
-            const form = document.createElement('form');
-            form.setAttribute('method', 'POST');
-            form.setAttribute('action', SCRIPT_URL);
-            form.setAttribute('target', 'pafas-submit-iframe');
-            form.style.display = 'none';
-
-            const input = document.createElement('input');
-            input.setAttribute('name', 'payload');
-            input.setAttribute('type', 'hidden');
-            input.setAttribute('value', JSON.stringify(payload));
-            form.appendChild(input);
-
-            document.body.appendChild(form);
-            form.submit();
-            form.remove();
-
-            const timeoutMs = 30000;
-            
-            // Asumir éxito después de 10 segundos sin error
-            const assumeSuccessTimeout = setTimeout(function() {
-                console.log('[PAFAS] 10 segundos sin error - Asumiendo éxito');
-                clearTimeout(timeoutId);
-                window.removeEventListener('message', onMessage);
-                showSuccess();
-            }, 10000);
-            
-            // Timeout de seguridad de 30 segundos
-            const timeoutId = setTimeout(function() {
-                clearTimeout(assumeSuccessTimeout);
-                window.removeEventListener('message', onMessage);
-                console.warn('[PAFAS] Timeout después de 30 segundos');
+                });
                 
-                if (confirm('El envío tardó más de lo esperado.\n\n¿Los datos aparecen en tu Google Sheet?\n\nSi ya están guardados, haz click en OK.\nSi no, haz click en Cancelar para reintentar.')) {
-                    showSuccess();
-                } else {
-                    btn.disabled = false;
-                    btn.textContent = 'Reintentar Envío';
-                }
-            }, timeoutMs);
+                return esValido;
+            }
 
-            function onMessage(ev) {
-                console.log('[PAFAS] Mensaje recibido:', ev.data);
+            function buildPayload() {
+                const payload = {
+                    timestamp: new Date().toISOString(),
+                    nombre: document.getElementById('nombre').value,
+                    email: document.getElementById('email').value,
+                    edad: 'N/A',
+                    parentesco: document.getElementById('parentesco').value,
+                    respuestas: {}
+                };
                 
-                if (ev.data && ev.data.type === 'PAFAS_SUBMIT_SUCCESS') {
-                    clearTimeout(timeoutId);
-                    clearTimeout(assumeSuccessTimeout);
-                    window.removeEventListener('message', onMessage);
-                    console.log('[PAFAS] Confirmación recibida');
-                    showSuccess();
-                } else if (ev.data && ev.data.type === 'PAFAS_SUBMIT_ERROR') {
-                    clearTimeout(timeoutId);
-                    clearTimeout(assumeSuccessTimeout);
-                    window.removeEventListener('message', onMessage);
-                    console.error('[PAFAS] Error recibido:', ev.data.message);
-                    alert('Error al enviar el formulario: ' + (ev.data.message || 'Error desconocido'));
+                cuestionario.data[0].items.forEach(item => {
+                    const questionDiv = document.getElementById(`question-${item.id}`);
+                    
+                    if (questionDiv && questionDiv.style.display !== 'none') {
+                        const input = document.querySelector(`input[name="q${item.id}"]:checked`);
+                        if (input) {
+                            payload.respuestas[`pregunta_${item.id}`] = input.value;
+                        }
+                    }
+                });
+                
+                return payload;
+            }
+
+            async function handleSubmit(event) {
+                event.preventDefault();
+                
+                console.log('[PAFAS] Enviando formulario...');
+                
+                if (!validarFormulario()) {
+                    alert('Por favor, complete todos los campos requeridos.');
+                    return;
+                }
+
+                const btn = event.target.querySelector('button[type="submit"]');
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading"></span> Enviando...';
+
+                const payload = buildPayload();
+                console.log('[PAFAS] Payload:', payload);
+
+                // Envío por formulario a iframe para evitar CORS con Google Apps Script
+                const isGoogleAppsScript = submitUrl && submitUrl.indexOf('script.google.com') !== -1;
+                if (isGoogleAppsScript) {
+                    submitViaFormToIframe(payload, btn);
+                    return;
+                }
+
+                try {
+                    const response = await fetch(submitUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const rawText = await response.text();
+                    if (rawText.trim().startsWith('<')) {
+                        console.error('[PAFAS] El servidor devolvió HTML en lugar de JSON:', rawText.substring(0, 200));
+                        throw new Error('El servidor devolvió una página HTML en lugar de datos. Comprueba que la URL de envío (Google Apps Script o API) sea correcta y esté desplegada como "Aplicación web".');
+                    }
+                    let result;
+                    try {
+                        result = JSON.parse(rawText);
+                    } catch (e) {
+                        throw new Error('La respuesta del servidor no es JSON válido: ' + (e.message || e));
+                    }
+                    console.log('[PAFAS] Respuesta del servidor:', result);
+
+                    if (result.success) {
+                        showSuccess();
+                        
+                        if (window.parent !== window) {
+                            window.parent.postMessage({ type: 'PAFAS_SUBMIT_SUCCESS' }, '*');
+                        }
+                    } else {
+                        throw new Error(result.error || 'Error desconocido al enviar');
+                    }
+                } catch (error) {
+                    console.error('[PAFAS] Error en envío:', error);
+                    alert('Error al enviar el formulario: ' + error.message);
                     btn.disabled = false;
                     btn.textContent = 'Enviar Formulario';
                 }
             }
 
-            window.addEventListener('message', onMessage);
-        }
+            function submitViaFormToIframe(payload, btn) {
+                const form = document.createElement('form');
+                form.setAttribute('method', 'POST');
+                form.setAttribute('action', submitUrl);
+                form.setAttribute('target', 'pafas-submit-iframe');
+                form.style.display = 'none';
 
-        async function handleSubmit(event) {
-            event.preventDefault();
-            
-            console.log('[PAFAS] Enviando formulario...');
-            
-            if (!validarFormulario()) {
-                alert('Por favor, complete todos los campos requeridos.');
-                return;
-            }
+                const input = document.createElement('input');
+                input.setAttribute('name', 'payload');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('value', JSON.stringify(payload));
+                form.appendChild(input);
 
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="loading"></span> Enviando...';
+                document.body.appendChild(form);
+                form.submit();
+                form.remove();
 
-            const payload = buildPayload();
-            console.log('[PAFAS] Payload:', payload);
-
-            // Detectar si es Google Apps Script
-            const isGoogleAppsScript = SCRIPT_URL && SCRIPT_URL.indexOf('script.google.com') !== -1;
-            
-            if (isGoogleAppsScript) {
-                submitViaFormToIframe(payload, btn);
-                return;
-            }
-
-            // Si no es Google Apps Script, usar fetch normal
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const rawText = await response.text();
+                const timeoutMs = 30000;
                 
-                if (rawText.trim().startsWith('<')) {
-                    console.error('[PAFAS] El servidor devolvió HTML:', rawText.substring(0, 200));
-                    throw new Error('El servidor devolvió una página HTML en lugar de datos.');
-                }
-                
-                let result;
-                try {
-                    result = JSON.parse(rawText);
-                } catch (e) {
-                    throw new Error('La respuesta del servidor no es JSON válido: ' + (e.message || e));
-                }
-                
-                console.log('[PAFAS] Respuesta del servidor:', result);
-
-                if (result.success) {
+                const assumeSuccessTimeout = setTimeout(function() {
+                    console.log('[PAFAS] 10 segundos sin error - Asumiendo éxito');
+                    clearTimeout(timeoutId);
+                    window.removeEventListener('message', onMessage);
                     showSuccess();
-                } else {
-                    throw new Error(result.error || 'Error desconocido al enviar');
+                }, 10000);
+                
+                const timeoutId = setTimeout(function() {
+                    clearTimeout(assumeSuccessTimeout);
+                    window.removeEventListener('message', onMessage);
+                    console.warn('[PAFAS] Timeout después de 30 segundos');
+                    
+                    if (confirm('El envío tardó más de lo esperado.\n\n¿Los datos aparecen en tu Google Sheet?\n\nSi ya están guardados, haz click en OK.\nSi no, haz click en Cancelar para reintentar.')) {
+                        showSuccess();
+                    } else {
+                        btn.disabled = false;
+                        btn.textContent = 'Reintentar Envío';
+                    }
+                }, timeoutMs);
+
+                function onMessage(ev) {
+                    console.log('[PAFAS] Mensaje recibido:', ev.data);
+                    
+                    if (ev.data && ev.data.type === 'PAFAS_SUBMIT_SUCCESS') {
+                        clearTimeout(timeoutId);
+                        clearTimeout(assumeSuccessTimeout);
+                        window.removeEventListener('message', onMessage);
+                        console.log('[PAFAS] Confirmación recibida');
+                        showSuccess();
+                        if (window.parent !== window) {
+                            window.parent.postMessage({ type: 'PAFAS_SUBMIT_SUCCESS' }, '*');
+                        }
+                    } else if (ev.data && ev.data.type === 'PAFAS_SUBMIT_ERROR') {
+                        clearTimeout(timeoutId);
+                        clearTimeout(assumeSuccessTimeout);
+                        window.removeEventListener('message', onMessage);
+                        console.error('[PAFAS] Error recibido:', ev.data.message);
+                        alert('Error al enviar el formulario: ' + (ev.data.message || 'Error desconocido'));
+                        btn.disabled = false;
+                        btn.textContent = 'Enviar Formulario';
+                    }
                 }
-            } catch (error) {
-                console.error('[PAFAS] Error en envío:', error);
-                alert('Error al enviar el formulario: ' + error.message);
-                btn.disabled = false;
-                btn.textContent = 'Enviar Formulario';
+
+                window.addEventListener('message', onMessage);
             }
-        }
 
-        function showSuccess() {
-            const container = document.getElementById('app-container');
-            container.innerHTML = `
-                <div class="success-message">
-                    <h2>✅ Formulario Enviado Correctamente</h2>
-                    <p>Gracias por completar la Escala PAFAS.</p>
-                    <p>Sus respuestas han sido registradas en el sistema.</p>
-                </div>
-            `;
-        }
+            function showSuccess() {
+                const container = document.getElementById('app-container');
+                container.innerHTML = `
+                    <div class="success-message">
+                        <h2>✅ Formulario Enviado Correctamente</h2>
+                        <p>Gracias por completar la Escala PAFAS.</p>
+                        <p>Sus respuestas han sido registradas en el sistema.</p>
+                    </div>
+                `;
+            }
 
-        // Event listeners
-        document.getElementById('pafasForm').addEventListener('submit', handleSubmit);
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            generarPreguntas();
-        });
+            function showError(message) {
+                const container = document.getElementById('app-container');
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3>❌ Error</h3>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+
+            window.addEventListener('DOMContentLoaded', init);
+
+        })();
     </script>
 </body>
 </html>
