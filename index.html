@@ -77,11 +77,7 @@
                         <input type="email" id="email" name="email" required>
                         <div class="error-message" id="error-email">Por favor, ingrese un correo válido</div>
                     </div>
-                    <div class="form-group">
-                        <label for="edad">Edad del hijo/a <span class="required">*</span></label>
-                        <input type="number" id="edad" name="edad" min="0" max="18" required>
-                        <div class="error-message" id="error-edad">Por favor, ingrese la edad del hijo/a</div>
-                    </div>
+                
                     <div class="form-group">
                         <label for="parentesco">Parentesco <span class="required">*</span></label>
                         <select id="parentesco" name="parentesco" required>
@@ -161,7 +157,7 @@
 
         function validarFormulario() {
             let valido = true;
-            ['nombre', 'email', 'edad', 'parentesco'].forEach(campo => {
+            ['nombre', 'email','parentesco'].forEach(campo => {
                 const input = document.getElementById(campo);
                 const error = document.getElementById(`error-${campo}`);
                 if (!input.value.trim()) {
@@ -195,7 +191,6 @@
                 timestamp: new Date().toISOString(),
                 nombre: document.getElementById('nombre').value,
                 email: document.getElementById('email').value,
-                edad: document.getElementById('edad').value,
                 parentesco: document.getElementById('parentesco').value,
                 respuestas: {}
             };
